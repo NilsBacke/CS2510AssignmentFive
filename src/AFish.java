@@ -8,4 +8,16 @@ public class AFish {
     this.y = y;
     this.size = size;
   }
+  
+  int getX() {
+    return this.x;
+  }
+  
+  int getY() {
+    return this.y;
+  }
+  
+  int getSize() {
+    return this.size;
+  }
 }

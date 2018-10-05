@@ -18,27 +18,28 @@ public class Fishy extends World {
     this.enemyFish = new MtLoEnemyFish();
     
     for (int i = 0; i < 5; i++) {
-      this.enemyFish.add(new EnemyFish());
+      this.enemyFish = this.enemyFish.add(new EnemyFish());
     }
   }
   
   Fishy(UserFish userFish, ILoEnemyFish enemyFish) {
     super();
     this.userFish = userFish;
-    this.enemyFish = enemyFish.update();
+    this.enemyFish = enemyFish;
   }
   
   public WorldImage background = 
       new RectangleImage(this.width, this.height, OutlineMode.SOLID, Color.BLUE);
-
 
   /**
    * produce the image of this world
    */
   @Override
   public WorldScene makeScene() {
-    return this.getEmptyScene().placeImageXY(this.background, this.width / 2, this.height / 2)
+    WorldScene scene = this.getEmptyScene().placeImageXY(this.background, this.width / 2, this.height / 2)
         .placeImageXY(this.userFish.userFishImage(), this.userFish.x, this.userFish.y);
+    scene = this.enemyFish.addToScene(scene);
+    return scene;
   }
   
   /** Move the UserFish when the player presses a key */
@@ -53,7 +54,7 @@ public class Fishy extends World {
    * On tick move all of the enemy fish in their appropriate direction.
    */
   public World onTick() {
-    return new Fishy(this.userFish.update(), this.enemyFish);
+    return new Fishy(this.userFish.update(), this.enemyFish.update());
   }
 
 }
