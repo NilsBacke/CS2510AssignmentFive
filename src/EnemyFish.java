@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Random;
 
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
@@ -9,11 +10,17 @@ public class EnemyFish extends AFish {
   // -1 = right to left
   // 1 = left to right
   int direction;
+  Random rand;
   
   EnemyFish() {
+    this(new Random());
+  }
+  
+  EnemyFish(Random rand) {
     super(0, 0, 0);
-    this.y = (int) Math.floor(Math.random() * 400);
-    this.size = (int) Math.floor(Math.random() * 15) + 5;
+    this.rand = rand;
+    this.y = rand.nextInt(400); // 0 to 400
+    this.size = rand.nextInt(15) + 5; // 5 to 20
     
     if (Math.random() < .5) {
       this.x = 400;

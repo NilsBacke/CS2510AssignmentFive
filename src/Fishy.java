@@ -11,13 +11,14 @@ public class Fishy extends World {
   int height = 400;
   UserFish userFish;
   ILoEnemyFish enemyFish;
+  final int NUM_ENEMY_FISH = 10;
   
   Fishy() {
     super();
     this.userFish = new UserFish(this.width / 2, this.height / 2, 10);
     this.enemyFish = new MtLoEnemyFish();
     
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < NUM_ENEMY_FISH; i++) {
       this.enemyFish = this.enemyFish.add(new EnemyFish());
     }
   }
@@ -26,6 +27,17 @@ public class Fishy extends World {
     super();
     this.userFish = userFish;
     this.enemyFish = enemyFish;
+    
+    int result = this.enemyFish.didCollide(userFish);
+    if (result == 0) {
+      return;
+    } else if (result == -1) {
+      // user fish dies
+      // game over
+    } else {
+      this.enemyFish = this.enemyFish.removeAt(result);
+      this.userFish = this.userFish.grow();
+    }
   }
   
   public WorldImage background = 

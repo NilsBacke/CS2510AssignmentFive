@@ -8,6 +8,14 @@ interface ILoEnemyFish {
   WorldScene addToScene(WorldScene scene);
 
   int length();
+
+  //returns 0 if no collision, -1 if the fish should die, else the index of the fish it eats
+  int didCollide(UserFish user);
+  
+  int didCollideHelp(UserFish user, int index);
+  
+  ILoEnemyFish removeAt(int index);
+  ILoEnemyFish removeAtHelp(int index, int acc);
 }
 
 class MtLoEnemyFish implements ILoEnemyFish {
@@ -32,6 +40,27 @@ class MtLoEnemyFish implements ILoEnemyFish {
   @Override
   public int length() {
     return 0;
+  }
+
+  //returns 0 if no collision, -1 if the fish should die, else the index of the fish it eats
+  @Override
+  public int didCollide(UserFish user) {
+    return 0;
+  }
+
+  @Override
+  public int didCollideHelp(UserFish user, int index) {
+    return 0;
+  }
+
+  @Override
+  public ILoEnemyFish removeAt(int index) {
+    return this;
+  }
+
+  @Override
+  public ILoEnemyFish removeAtHelp(int index, int acc) {
+    return this;
   }
 }
 
@@ -63,5 +92,50 @@ class ConsLoEnemyFish implements ILoEnemyFish {
   @Override
   public int length() {
     return 1 + this.rest.length();
+  }
+
+  // returns 0 if no collision, -1 if the fish should die, else the index of the fish it eats
+  @Override
+  public int didCollide(UserFish user) {
+    return this.didCollideHelp(user, 0);
+  }
+
+  @Override
+  public int didCollideHelp(UserFish user, int index) {
+//    System.out.println("Index: " + index);
+    if (user.collides(this.first)) {
+      // determine if userfish dies or grows
+      // remove enemy fish from the list
+      if (this.first.getSize() <= user.getSize()) {
+        // eat
+        System.out.println("EAT");
+        System.out.println("Result: " + index);
+        return index;
+      }
+      else {
+        // die
+        System.out.println("DIE");
+        return -1;
+      }
+    }
+    else {
+      return this.rest.didCollideHelp(user, index + 1);
+    }
+  }
+
+  @Override
+  public ILoEnemyFish removeAt(int index) {
+    return this.removeAtHelp(index, 0);
+  }
+
+  @Override
+  public ILoEnemyFish removeAtHelp(int index, int acc) {
+//    System.out.println("Index: " + index);
+//    System.out.println("Acc: " + acc);
+    if (index == acc) {
+      return this.rest;
+    } else {
+      return new ConsLoEnemyFish(this.first, this.rest.removeAtHelp(index, acc + 1));
+    }
   }
 }
