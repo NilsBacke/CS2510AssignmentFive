@@ -33,6 +33,11 @@ public class EnemyFish extends AFish {
   
   EnemyFish update() {
     this.x += this.direction * 5;
+    if (this.x > 400) {
+      this.x = 0;
+    } else if (this.x < 0) {
+      this.x = 400;
+    }
     return this;
   }
   

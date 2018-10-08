@@ -50,8 +50,8 @@ public class UserFish extends AFish {
         .pow(enemy.getSize() + this.size, 2);
   }
   
-  UserFish grow() {
-    return new UserFish(this.x, this.y, this.size + 1);
+  UserFish grow(EnemyFish enemyEaten) {
+    return new UserFish(this.x, this.y, this.size + enemyEaten.getSize() / 5);
   }
 
   /** produce the image of this blob */

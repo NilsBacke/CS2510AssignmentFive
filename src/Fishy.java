@@ -28,15 +28,12 @@ public class Fishy extends World {
     this.userFish = userFish;
     this.enemyFish = enemyFish;
     
-    int result = this.enemyFish.didCollide(userFish);
-    if (result == 0) {
+    int result = this.enemyFish.didCollide(this.userFish);
+    if (result == -2 || result == -1) {
       return;
-    } else if (result == -1) {
-      // user fish dies
-      // game over
     } else {
       this.enemyFish = this.enemyFish.removeAt(result);
-      this.userFish = this.userFish.grow();
+      this.userFish = this.userFish.grow(this.enemyFish.at(result));
     }
   }
   
@@ -52,6 +49,28 @@ public class Fishy extends World {
         .placeImageXY(this.userFish.userFishImage(), this.userFish.x, this.userFish.y);
     scene = this.enemyFish.addToScene(scene);
     return scene;
+  }
+  
+  /** produce the last image of this world by adding text to the image */
+  public WorldScene lastScene(String s) {
+    return this.makeScene().placeImageXY(new TextImage(s, Color.red), 200, 200);
+  }
+  
+  /**
+   * Check whether the Blob is out of bounds, or fell into the black hole in the
+   * middle.
+   */
+  public WorldEnd worldEnds() {
+    
+    int result = this.enemyFish.didCollide(this.userFish);
+    // fish got eaten
+    if (result == -1) {
+      return new WorldEnd(true, this.lastScene("YOU LOSE"));
+    } else if (this.enemyFish.isBiggestFish(this.userFish)) {
+      return new WorldEnd(true, this.lastScene("YOU WIN"));
+    } else {
+      return new WorldEnd(false, this.makeScene());
+    }
   }
   
   /** Move the UserFish when the player presses a key */

@@ -9,13 +9,20 @@ interface ILoEnemyFish {
 
   int length();
 
-  //returns 0 if no collision, -1 if the fish should die, else the index of the fish it eats
+  //returns -2 if no collision, -1 if the fish should die, else the index of the fish it eats
   int didCollide(UserFish user);
   
   int didCollideHelp(UserFish user, int index);
   
   ILoEnemyFish removeAt(int index);
   ILoEnemyFish removeAtHelp(int index, int acc);
+  
+  // returns the EnemyFish at the given index in the list
+  EnemyFish at(int index);
+  EnemyFish atHelp(int index, int acc);
+  
+  // returns true if the given UserFish is bigger than all of the enemy fish
+  boolean isBiggestFish(UserFish user);
 }
 
 class MtLoEnemyFish implements ILoEnemyFish {
@@ -42,15 +49,15 @@ class MtLoEnemyFish implements ILoEnemyFish {
     return 0;
   }
 
-  //returns 0 if no collision, -1 if the fish should die, else the index of the fish it eats
+  //returns -2 if no collision, -1 if the fish should die, else the index of the fish it eats
   @Override
   public int didCollide(UserFish user) {
-    return 0;
+    return -2;
   }
 
   @Override
   public int didCollideHelp(UserFish user, int index) {
-    return 0;
+    return -2;
   }
 
   @Override
@@ -61,6 +68,21 @@ class MtLoEnemyFish implements ILoEnemyFish {
   @Override
   public ILoEnemyFish removeAtHelp(int index, int acc) {
     return this;
+  }
+
+  @Override
+  public EnemyFish at(int index) {
+    return null;
+  }
+
+  @Override
+  public EnemyFish atHelp(int index, int acc) {
+    return null;
+  }
+
+  @Override
+  public boolean isBiggestFish(UserFish user) {
+    return true;
   }
 }
 
@@ -102,14 +124,11 @@ class ConsLoEnemyFish implements ILoEnemyFish {
 
   @Override
   public int didCollideHelp(UserFish user, int index) {
-//    System.out.println("Index: " + index);
     if (user.collides(this.first)) {
       // determine if userfish dies or grows
       // remove enemy fish from the list
       if (this.first.getSize() <= user.getSize()) {
         // eat
-        System.out.println("EAT");
-        System.out.println("Result: " + index);
         return index;
       }
       else {
@@ -130,12 +149,33 @@ class ConsLoEnemyFish implements ILoEnemyFish {
 
   @Override
   public ILoEnemyFish removeAtHelp(int index, int acc) {
-//    System.out.println("Index: " + index);
-//    System.out.println("Acc: " + acc);
     if (index == acc) {
       return this.rest;
     } else {
       return new ConsLoEnemyFish(this.first, this.rest.removeAtHelp(index, acc + 1));
+    }
+  }
+
+  @Override
+  public EnemyFish at(int index) {
+    return atHelp(index, 0);
+  }
+
+  @Override
+  public EnemyFish atHelp(int index, int acc) {
+    if (index == acc) {
+      return this.first;
+    } else {
+      return this.rest.atHelp(index, acc + 1);
+    }
+  }
+
+  @Override
+  public boolean isBiggestFish(UserFish user) {
+    if (this.first.getSize() > user.getSize()) {
+      return false;
+    } else {
+      return this.rest.isBiggestFish(user);
     }
   }
 }
