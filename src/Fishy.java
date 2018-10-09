@@ -18,9 +18,7 @@ public class Fishy extends World {
     this.userFish = new UserFish(this.width / 2, this.height / 2, 10);
     this.enemyFish = new MtLoEnemyFish();
     
-    for (int i = 0; i < NUM_ENEMY_FISH; i++) {
-      this.enemyFish = this.enemyFish.add(new EnemyFish());
-    }
+    this.enemyFish = this.enemyFish.add(NUM_ENEMY_FISH);
   }
   
   Fishy(UserFish userFish, ILoEnemyFish enemyFish) {
@@ -32,8 +30,8 @@ public class Fishy extends World {
     if (result == -2 || result == -1) {
       return;
     } else {
-      this.enemyFish = this.enemyFish.removeAt(result);
       this.userFish = this.userFish.grow(this.enemyFish.at(result));
+      this.enemyFish = this.enemyFish.removeAt(result);
     }
   }
   

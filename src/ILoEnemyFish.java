@@ -23,6 +23,10 @@ interface ILoEnemyFish {
   
   // returns true if the given UserFish is bigger than all of the enemy fish
   boolean isBiggestFish(UserFish user);
+  
+  // adds num number of new EnemyFish to the list
+  ILoEnemyFish add(int num);
+  ILoEnemyFish addHelp(int num, int acc);
 }
 
 class MtLoEnemyFish implements ILoEnemyFish {
@@ -83,6 +87,16 @@ class MtLoEnemyFish implements ILoEnemyFish {
   @Override
   public boolean isBiggestFish(UserFish user) {
     return true;
+  }
+
+  @Override
+  public ILoEnemyFish add(int num) {
+    return this.addHelp(num, 0);
+  }
+
+  @Override
+  public ILoEnemyFish addHelp(int num, int acc) {
+    return new ConsLoEnemyFish(new EnemyFish(), this).addHelp(num, acc + 1);
   }
 }
 
@@ -176,6 +190,20 @@ class ConsLoEnemyFish implements ILoEnemyFish {
       return false;
     } else {
       return this.rest.isBiggestFish(user);
+    }
+  }
+
+  @Override
+  public ILoEnemyFish add(int num) {
+    return this.addHelp(num, 0);
+  }
+
+  @Override
+  public ILoEnemyFish addHelp(int num, int acc) {
+    if (num == acc) {
+      return this;
+    } else {
+      return new ConsLoEnemyFish(new EnemyFish(), this).addHelp(num, acc + 1);
     }
   }
 }
