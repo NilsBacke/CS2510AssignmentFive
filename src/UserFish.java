@@ -3,13 +3,30 @@ import java.awt.Color;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
 
+// represents a UserFish
 public class UserFish extends AFish {
 
   UserFish(int x, int y, int size) {
     super(x, y, size);
   }
+  
+  /* template for UserFish
+   * Fields:
+   * this.x ... int
+   * this.y ... int
+   * this.size ... int
+   * Methods:
+   * moveUser ... UserFish
+   * update ... UserFish
+   * collide .. boolean
+   * grow ... UserFish
+   * userFishImage ... WorldImage
+   * Methods for fields:
+   * 
+   */
 
   UserFish moveUser(String ke) {
+    // returns a new UserFish in an updated location
     if (ke.equals("right")) {
       return new UserFish(this.x + 5, this.y, this.size);
     }
@@ -28,6 +45,7 @@ public class UserFish extends AFish {
   }
 
   UserFish update() {
+    // updates the location of the UserFish
     if (this.x < 0) {
       return new UserFish(400, this.y, this.size);
     }
@@ -46,16 +64,18 @@ public class UserFish extends AFish {
   }
 
   boolean collides(EnemyFish enemy) {
+    // determines if the UserFish collided with the EnemyFish
     return Math.pow(enemy.getX() - this.x, 2) + Math.pow(enemy.getY() - this.y, 2) <= Math
         .pow(enemy.getSize() + this.size, 2);
   }
   
   UserFish grow(EnemyFish enemyEaten) {
+    // returns a larger EnemyFish
     return new UserFish(this.x, this.y, this.size + enemyEaten.getSize() / 5);
   }
 
-  /** produce the image of this blob */
   WorldImage userFishImage() {
+    // produces the image of the UserFish
     return new CircleImage(this.size, "solid", new Color(255, 0, 0));
   }
 

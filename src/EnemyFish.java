@@ -4,6 +4,7 @@ import java.util.Random;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
 
+// represents all the EnemyFish
 public class EnemyFish extends AFish {
 
   // -1, 1
@@ -31,16 +32,30 @@ public class EnemyFish extends AFish {
     }
   }
   
+  /* template for EnemyFish
+   * Fields:
+   * this.direction ... int
+   * this.rand ... Random
+   * Methods:
+   * update ... EnemyFish
+   * enemyFishImage ... WorldImage
+   * Fields for methods:
+   * 
+   */
+  
   EnemyFish update() {
-    this.x += this.direction * 6;
-    if (this.x > 400 || this.x < 0) {
-      return new EnemyFish();
+    // updates the location of a given EnemyFish
+    this.x += this.direction * 5;
+    if (this.x > 400) {
+      this.x = 0;
+    } else if (this.x < 0) {
+      this.x = 400;
     }
     return this;
   }
   
-  /** produce the image of this blob */
   WorldImage enemyFishImage() {
+    // produces the image of this EnemyFish 
     return new CircleImage(this.size, "solid", new Color(0, 255, 0));
   }
 
