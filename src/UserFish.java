@@ -3,9 +3,10 @@ import java.awt.Color;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
 
-// represents a UserFish
-public class UserFish extends AFish {
+// represents the player
+public class UserFish extends Fish {
 
+  // creates a new UserFish given a x and y coordinate along with a size
   UserFish(int x, int y, int size) {
     super(x, y, size);
   }
@@ -46,6 +47,7 @@ public class UserFish extends AFish {
 
   UserFish update() {
     // updates the location of the UserFish
+    // checks if the player is out of bounds, and loops to the other side of the scene
     if (this.x < 0) {
       return new UserFish(400, this.y, this.size);
     }

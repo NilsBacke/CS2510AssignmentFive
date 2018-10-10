@@ -9,12 +9,13 @@ import javalib.worldimages.*;
 // represents all fish in the game
 public class Fishy extends World {
   
-  int width = 400;
-  int height = 400;
+  int width = 400; // of the scene
+  int height = 400; // of the scene
   UserFish userFish;
   ILoEnemyFish enemyFish;
   final int NUM_ENEMY_FISH = 10;
   
+  // creates a new Fishy game
   Fishy() {
     super();
     this.userFish = new UserFish(this.width / 2, this.height / 2, 10);
@@ -25,6 +26,8 @@ public class Fishy extends World {
     }
   }
   
+  // creates a new Fishy game with a given UserFish and list of EnemyFish
+  // used in the onTick method to update the UserFish and the list of EnemyFish
   Fishy(UserFish userFish, ILoEnemyFish enemyFish) {
     super();
     this.userFish = userFish;
@@ -34,10 +37,42 @@ public class Fishy extends World {
     if (result == -2 || result == -1) {
       return;
     } else {
-      this.enemyFish = this.enemyFish.removeAt(result);
       this.userFish = this.userFish.grow(this.enemyFish.at(result));
+      this.enemyFish = this.enemyFish.removeAt(result);
     }
   }
+  
+  /* template for Fishy
+   * Fields:
+   * this.width ... int
+   * this.height ... int
+   * this.userFish ... UserFish
+   * this.enemyFish ... ILoEnemyFish
+   * this.NUM_ENEMY_FISH ... final int
+   * Methods:
+   * makeScene ... WorldScene
+   * lastScene ... WorldScene
+   * worldEnds ... WorldEnd
+   * onKeyEvent ... World
+   * onTick ... World
+   * Methods for fields:
+   * this.userFish.moveUser ... UserFish
+   * this.userFish.update ... UserFish
+   * this.userFish.collide .. boolean
+   * this.userFish.grow ... UserFish
+   * this.userFish.userFishImage ... WorldImage
+   * this.enemyFish.add ... ILoEnemyFish
+   * this.enemyFish.update ... ILoEnemyFish
+   * this.enemyFish.addToScene ... WorldScene
+   * this.enemyFish.length ... int
+   * this.enemyFish.didCollide ... int
+   * this.enemyFish.didCollideHelp ... int
+   * this.enemyFish.removeAt ... ILoEnemyFish
+   * this.enemyFish.removeAtHelp ... ILoEnemyFish
+   * this.enemyFish.at ... EnemyFish
+   * this.enemyFish.atHelp ... EnemyFish
+   * this.enemyFish.isBiggerFish ... boolean
+   */
   
   // represents the background of the game
   public WorldImage background = 
@@ -88,8 +123,8 @@ public class Fishy extends World {
 
 // examples for all types of fish
 class FishyExamples {
-  AFish userFish1 = new UserFish(12, 55, 6);
-  AFish userFish2 = new UserFish(88, 70, 12);
+  Fish userFish1 = new UserFish(12, 55, 6);
+  Fish userFish2 = new UserFish(88, 70, 12);
   UserFish userFish3 = new UserFish(76, 70, 12);
   UserFish userFish4 = new UserFish(0, 0, 0);
   UserFish userFish5 = new UserFish(10, 9, 4);
@@ -99,7 +134,7 @@ class FishyExamples {
   UserFish userFish9 = new UserFish(59, 865, 21);
   UserFish userFish10 = new UserFish(232, -90, 21);
   EnemyFish enemyFish1 = new EnemyFish(new Random(7));
-  AFish enemyFish2 = new EnemyFish(new Random(82));
+  Fish enemyFish2 = new EnemyFish(new Random(82));
   EnemyFish enemyFish3 = new EnemyFish(new Random(4));
   EnemyFish enemyFish4 = new EnemyFish(new Random(142));
   EnemyFish enemyFish5 = new EnemyFish(new Random(21));

@@ -38,7 +38,7 @@ interface ILoEnemyFish {
   // determines whether the fish is dead or alive 
   int didCollideHelp(UserFish user, int index);
   
-  // removes the EnemyFish
+  // removes the EnemyFish at the given index
   ILoEnemyFish removeAt(int index);
   
   // removes the EnemyFish
@@ -148,6 +148,7 @@ class ConsLoEnemyFish implements ILoEnemyFish {
   EnemyFish first;
   ILoEnemyFish rest;
 
+  // creates a new element in a list of EnemyFish
   ConsLoEnemyFish(EnemyFish first, ILoEnemyFish rest) {
     this.first = first;
     this.rest = rest;
@@ -170,6 +171,10 @@ class ConsLoEnemyFish implements ILoEnemyFish {
    * atHelp ... EnemyFish
    * isBiggerFish ... boolean
    * Methods for fields:
+   * this.first.getX ... int
+   * this.first.getY ... int
+   * this.first.getSize ... int
+   * this.rest. all of the methods of this class
    */
 
   @Override
@@ -208,13 +213,13 @@ class ConsLoEnemyFish implements ILoEnemyFish {
     // determines whether the is dead or alive 
     if (user.collides(this.first)) {
       // determine if userfish dies or grows
-      // remove enemy fish from the list
       if (this.first.getSize() <= user.getSize()) {
-        // eat
+        // eat fish at the index
         return index;
       }
       else {
         // die
+        // remove enemy fish from the list
         System.out.println("DIE");
         return -1;
       }
@@ -234,7 +239,7 @@ class ConsLoEnemyFish implements ILoEnemyFish {
   public ILoEnemyFish removeAtHelp(int index, int acc) {
     // removes the ILoEnemyFish
     if (index == acc) {
-      return this.rest;
+      return this.rest; // skips this.first
     } else {
       return new ConsLoEnemyFish(this.first, this.rest.removeAtHelp(index, acc + 1));
     }
