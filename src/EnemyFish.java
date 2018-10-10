@@ -30,13 +30,20 @@ public class EnemyFish extends Fish {
     this.size = rand.nextInt(15) + 5; // 5 to 20
     
     // determine direction of travel
-    if (Math.random() < .5) {
+    if (rand.nextInt(2) == 0) { // either equal 0 or 1
       this.x = 400;
       this.direction = -1; // right to left
     } else {
       this.x = 0;
       this.direction = 1; // left to right
     }
+  }
+  
+  // for testing purposes only
+  EnemyFish(int direction, int x, int y, int size, Random rand) {
+    super(x, y, size);
+    this.rand = rand;
+    this.direction = direction;
   }
   
   /* template for EnemyFish
@@ -60,7 +67,7 @@ public class EnemyFish extends Fish {
   EnemyFish update() {
     this.x += this.direction * 6;
     if (this.x > 400 || this.x < 0) {
-      return new EnemyFish();
+      return new EnemyFish(this.rand);
     }
     return this;
   }
