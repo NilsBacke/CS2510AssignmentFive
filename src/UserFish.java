@@ -4,7 +4,7 @@ import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
 
 // represents the player
-public class UserFish extends Fish {
+public class UserFish extends AFish {
 
   // creates a new UserFish given a x and y coordinate along with a size
   UserFish(int x, int y, int size) {

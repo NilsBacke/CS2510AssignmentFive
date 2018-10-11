@@ -1,0 +1,43 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Fishy Design Guide\
+\
+AFish class:\
+A abstract super class of UserFish and EnemyFish\
+This class has fields: x, y, and size\
+These fields are common to both UserFish and EnemyFish, and are therefore extracted out into an abstract class.\
+\
+UserFish class:\
+A subclass of AFish\
+This class represents the player fish object in the game\
+This class has a moveUser method, which returns a new UserFish object at the appropriate coordinates\
+This class also has a method that checks for when the UserFish is out of bounds, and has collided with a given enemy fish. It also has methods that grow the fish and produce the fish\'92s visual image.\
+\
+EnemyFish class:\
+A subclass of AFish\
+This class represents a background fish in the game\
+This class has a direction, either -1 or 1, to determine which way it will move across the screen\
+The fish\'92s y coordinate is randomly assigned, and it\'92s x coordinate is either 0 or 400\
+This class has a method that will move the fish across the screen by 6 units, and a method that produces the fish\'92s visual image.\
+\
+ILoEnemyFish interface:\
+This interface represents a list of EnemyFish\
+This interface features multiple methods necessary to manipulate the background fish of the game\
+\
+MtLoEnemyFish class:\
+This class implements the ILoEnemyFish interface and represents an empty list\
+\
+ConsLoEnemyFish class:\
+This class implements the ILoEnemyFish interface and represents the list\
+This class has an EnemyFish, first, and a ILoEnemyFish, rest.\
+\
+Fishy class:\
+This class represents the world state of the game, as it extends the superclass World.\
+\
+\
+}

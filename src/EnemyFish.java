@@ -5,7 +5,7 @@ import javalib.worldimages.CircleImage;
 import javalib.worldimages.WorldImage;
 
 // represents a background fish in the Fishy game
-public class EnemyFish extends Fish {
+public class EnemyFish extends AFish {
 
   // -1, 1
   // -1 = right to left

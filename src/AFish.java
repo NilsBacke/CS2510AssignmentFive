@@ -1,11 +1,11 @@
 // a super class for EnemyFish and UserFish
-public class Fish {
+public abstract class AFish {
   int x;
   int y;
   int size;
   
   // creates a new Fish given an x and y coordinate along with a size
-  Fish(int x, int y, int size) {
+  AFish(int x, int y, int size) {
     this.x = x;
     this.y = y;
     this.size = size;
